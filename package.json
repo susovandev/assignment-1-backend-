@@ -1,0 +1,31 @@
+{
+	"name": "01-assignments",
+	"version": "1.0.0",
+	"description": "",
+	"main": "dist/main.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "dotenv -- tsc-watch --onSuccess \"node dist/main.js\"",
+		"start": "node dist/main.js",
+		"lint": "eslint",
+		"format:check": "prettier -c \"app/**/*.ts\"",
+		"format:fix": "prettier -w \"app/**/*.ts\""
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"type": "commonjs",
+	"devDependencies": {
+		"@tsconfig/node24": "^24.0.2",
+		"@types/express": "^5.0.5",
+		"@types/node": "^24.10.1",
+		"dotenv-cli": "^11.0.0",
+		"prettier": "^3.6.2",
+		"tsc-watch": "^7.2.0",
+		"typescript": "^5.9.3"
+	},
+	"dependencies": {
+		"dotenv": "^17.2.3",
+		"express": "^5.1.0"
+	}
+}
