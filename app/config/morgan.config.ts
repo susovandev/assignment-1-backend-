@@ -1,5 +1,5 @@
 import morgan, { StreamOptions } from 'morgan';
-import Logger from '../utils/logger.js';
+import Logger from '../utils/logger.util.js';
 import envConfig from './env.config.js';
 
 const stream: StreamOptions = {

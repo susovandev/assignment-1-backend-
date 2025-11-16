@@ -1,7 +1,7 @@
 import app from './app';
 import envConfig from './config/env.config';
 import connectDB from './db/db';
-import Logger from './utils/logger';
+import Logger from './utils/logger.util';
 
 const env = envConfig.SERVER.NODE_ENV;
 const port = envConfig.SERVER.PORT;
