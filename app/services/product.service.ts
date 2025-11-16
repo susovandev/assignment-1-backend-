@@ -8,7 +8,7 @@ class ProductService {
 
 			const product = await productModel.findById(id);
 			if (!product) {
-				throw new NotFoundException('product not found');
+				throw new NotFoundException('product not found for given ID');
 			}
 
 			return product;
@@ -43,12 +43,28 @@ class ProductService {
 
 			const updatedProduct = await productModel.findByIdAndUpdate(id, input, { new: true });
 			if (!updatedProduct) {
-				throw new NotFoundException('Product not found with this ID');
+				throw new NotFoundException('product not found for given ID');
 			}
 
 			return updatedProduct;
 		} catch (error) {
 			Logger.warn('[ProductService] Error updating product', error);
+			throw error;
+		}
+	}
+
+	async delete(id: string) {
+		try {
+			Logger.info(`[ProductService] Delete product request received with id: ${id}`);
+
+			const deletedProduct = await productModel.findByIdAndDelete(id);
+			if (!deletedProduct) {
+				throw new NotFoundException('product not found for given ID');
+			}
+
+			return deletedProduct;
+		} catch (error) {
+			Logger.warn('[ProductService] Error deleting product', error);
 			throw error;
 		}
 	}

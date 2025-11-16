@@ -17,4 +17,6 @@ router
 	.route('/:id')
 	.patch(validateRequest(updateProductValidationSchema), productController.updateProductHandler);
 
+router.route('/:id').delete(productController.deleteProductHandler);
+
 export default router;
