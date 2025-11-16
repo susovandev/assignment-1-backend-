@@ -5,6 +5,22 @@ import ApiResponse from '../utils/apiResponse.util';
 import productService from '../services/product.service';
 
 class ProductController {
+	async fetchProductHandler(req: Request, res: Response, next: NextFunction) {
+		try {
+			Logger.info(`[ProductController] Fetch product request received with id: ${req.params.id}`);
+
+			// Delegate core logic to service layer
+			const product = await productService.findById(req.params.id);
+
+			// Send structured API response
+			return res
+				.status(StatusCodes.OK)
+				.json(new ApiResponse(StatusCodes.OK, 'Product fetched successfully', product));
+		} catch (error) {
+			Logger.warn('[ProductController] Error fetching product', error);
+			next(error);
+		}
+	}
 	async createProductHandler(req: Request, res: Response, next: NextFunction) {
 		try {
 			Logger.info(`[ProductController] Create product request received`);
