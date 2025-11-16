@@ -2,11 +2,22 @@ import productModel, { IProductDocument } from '../model/product.model';
 import { InternalServerException, NotFoundException } from '../utils/apiError.util';
 import Logger from '../utils/logger.util';
 class ProductService {
+	async findAll() {
+		try {
+			Logger.info(`[ProductService] Fetch products request received`);
+
+			const products = await productModel.find({}).sort({ createdAt: -1 }).lean();
+			return products;
+		} catch (error) {
+			Logger.warn('[ProductService] Error fetching products', error);
+			throw error;
+		}
+	}
 	async findById(id: string) {
 		try {
 			Logger.info(`[ProductService] Find product request received with id: ${id}`);
 
-			const product = await productModel.findById(id);
+			const product = await productModel.findById(id).lean();
 			if (!product) {
 				throw new NotFoundException('product not found for given ID');
 			}

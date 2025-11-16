@@ -8,6 +8,7 @@ import {
 
 const router = Router();
 
+router.route('/').get(productController.fetchProductsHandler);
 router.route('/:id').get(productController.fetchProductHandler);
 router
 	.route('/')
