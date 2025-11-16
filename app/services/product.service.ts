@@ -34,6 +34,24 @@ class ProductService {
 			throw error;
 		}
 	}
+
+	async update(id: string, input: Partial<Omit<IProductDocument, 'createdAt' | 'updatedAt'>>) {
+		try {
+			Logger.info(
+				`[ProductController] update product request received with id: ${id} and input: ${JSON.stringify(input)}`,
+			);
+
+			const updatedProduct = await productModel.findByIdAndUpdate(id, input, { new: true });
+			if (!updatedProduct) {
+				throw new NotFoundException('Product not found with this ID');
+			}
+
+			return updatedProduct;
+		} catch (error) {
+			Logger.warn('[ProductService] Error updating product', error);
+			throw error;
+		}
+	}
 }
 
 export default new ProductService();

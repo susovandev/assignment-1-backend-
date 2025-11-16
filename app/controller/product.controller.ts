@@ -37,6 +37,23 @@ class ProductController {
 			next(error);
 		}
 	}
+
+	async updateProductHandler(req: Request, res: Response, next: NextFunction) {
+		try {
+			Logger.info(`[ProductController] update product request received with id: ${req.params.id}`);
+
+			// Delegate core logic to service layer
+			const product = await productService.update(req.params.id, req.body);
+
+			// Send structured API response
+			return res
+				.status(StatusCodes.OK)
+				.json(new ApiResponse(StatusCodes.OK, 'Product updated successfully'));
+		} catch (error) {
+			Logger.warn('[ProductController] Error update a product', error);
+			next(error);
+		}
+	}
 }
 
 export default new ProductController();
