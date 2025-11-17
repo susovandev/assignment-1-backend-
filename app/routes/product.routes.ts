@@ -3,21 +3,36 @@ import productController from '../controller/product.controller';
 import validateRequest from '../middlewares/validation.middleware';
 import {
 	createProductValidationSchema,
+	queryParamsValidationSchema,
 	updateProductValidationSchema,
+	validateId,
 } from '../validation/product.validation';
 
 const router = Router();
 
-router.route('/').get(productController.fetchProductsHandler);
-router.route('/:id').get(productController.fetchProductHandler);
+router
+	.route('/')
+	.get(
+		validateRequest(queryParamsValidationSchema, 'query'),
+		productController.fetchProductsHandler,
+	);
+router
+	.route('/:id')
+	.get(validateRequest(validateId, 'params'), productController.fetchProductHandler);
 router
 	.route('/')
 	.post(validateRequest(createProductValidationSchema), productController.createProductHandler);
 
 router
 	.route('/:id')
-	.patch(validateRequest(updateProductValidationSchema), productController.updateProductHandler);
+	.patch(
+		validateRequest(validateId, 'params'),
+		validateRequest(updateProductValidationSchema),
+		productController.updateProductHandler,
+	);
 
-router.route('/:id').delete(productController.deleteProductHandler);
+router
+	.route('/:id')
+	.delete(validateRequest(validateId, 'params'), productController.deleteProductHandler);
 
 export default router;

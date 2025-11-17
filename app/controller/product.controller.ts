@@ -8,9 +8,8 @@ class ProductController {
 	async fetchProductsHandler(req: Request, res: Response, next: NextFunction) {
 		try {
 			Logger.info(`[ProductController] Fetch products request received`);
-
 			// Delegate core logic to service layer
-			const products = await productService.findAll();
+			const products = await productService.findAll(req.query);
 
 			// Send structured API response
 			return res
@@ -53,7 +52,6 @@ class ProductController {
 			next(error);
 		}
 	}
-
 	async updateProductHandler(req: Request, res: Response, next: NextFunction) {
 		try {
 			Logger.info(`[ProductController] update product request received with id: ${req.params.id}`);
@@ -70,7 +68,6 @@ class ProductController {
 			next(error);
 		}
 	}
-
 	async deleteProductHandler(req: Request, res: Response, next: NextFunction) {
 		try {
 			Logger.info(`[ProductController] delete product request received with id: ${req.params.id}`);
